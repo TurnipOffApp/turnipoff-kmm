@@ -26,7 +26,6 @@ kotlin {
     val coroutinesVersion = "1.5.0-native-mt"
     val serializationVersion = "1.2.2"
     val ktorVersion = "1.6.1"
-    val composeVersion = "1.1.1"
     val logbackVersion = "1.2.11"
     
     sourceSets {
