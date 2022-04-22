@@ -23,9 +23,9 @@ kotlin {
         }
     }
 
-    val coroutinesVersion = "1.5.0-native-mt"
+    val coroutinesVersion = "1.6.1-native-mt"
     val serializationVersion = "1.2.2"
-    val ktorVersion = "1.6.1"
+    val ktorVersion = "2.0.0"
     val logbackVersion = "1.2.11"
     
     sourceSets {
@@ -37,6 +37,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
             }
         }
@@ -59,17 +61,12 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-        }
-        val iosX64Test by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
             }
         }
-        val iosArm64Test by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-            }
-        }
+        val iosX64Test by getting
+        val iosArm64Test by getting
         val iosSimulatorArm64Test by getting
         val iosTest by creating {
             dependsOn(commonTest)

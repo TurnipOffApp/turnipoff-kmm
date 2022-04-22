@@ -4,7 +4,11 @@ import SwiftUI
 struct iOSApp: App {
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+            NavigationView {
+                HomeView()
+                    .navigationTitle("TurnipOff")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
 		}
 	}
 }

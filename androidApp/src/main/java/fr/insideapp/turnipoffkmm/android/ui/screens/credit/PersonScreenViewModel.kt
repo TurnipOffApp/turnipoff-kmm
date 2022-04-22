@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import fr.insideapp.turnipoffkmm.android.logic.Service
 import fr.insideapp.turnipoffkmm.model.person.Person
 import fr.insideapp.turnipoffkmm.network.TheMovieDBClient
 import kotlinx.coroutines.launch
@@ -19,7 +20,7 @@ class PersonScreenViewModel(val personId: Long): ViewModel() {
 
     fun refreshPerson() {
         viewModelScope.launch {
-            val personResult = TheMovieDBClient.getPerson(
+            val personResult = Service.getInstance().client.getPerson(
                 personId = personId
             )
 

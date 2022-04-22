@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import fr.insideapp.turnipoffkmm.android.logic.Service
 import fr.insideapp.turnipoffkmm.model.TheMovieDBTimeWindow
 import fr.insideapp.turnipoffkmm.model.TheMovieDBMediaType
 import fr.insideapp.turnipoffkmm.model.search.MovieSearchResult
@@ -19,7 +20,7 @@ class HomeScreenViewModel : ViewModel() {
     fun getMovieTrendingList() {
         viewModelScope.launch {
             try {
-                val test =  TheMovieDBClient.trending(
+                val test =  Service.getInstance().client.trending(
                     mediaType = TheMovieDBMediaType.Movie,
                     timeWindow = TheMovieDBTimeWindow.Week
                 ).results

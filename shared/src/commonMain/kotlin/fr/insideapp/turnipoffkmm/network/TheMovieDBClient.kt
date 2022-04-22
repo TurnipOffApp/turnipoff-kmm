@@ -9,21 +9,27 @@ import fr.insideapp.turnipoffkmm.model.movie.Movie
 import fr.insideapp.turnipoffkmm.model.movie.MovieCredits
 import fr.insideapp.turnipoffkmm.model.person.Person
 import fr.insideapp.turnipoffkmm.model.search.MovieSearchResult
-import fr.insideapp.turnipoffkmm.network.utils.DateSerializer
-import io.ktor.client.HttpClient
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.serialization.kotlinx.json.*
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.kotlinx.serializer.*
+import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
+import kotlin.native.concurrent.SharedImmutable
 
-object TheMovieDBClient {
-    private const val BASE_URL: String = "api.themoviedb.org"
-    private const val API_KEY: String = "7aeaa9d72de6df534afb8b71ac7d82eb"
+@SharedImmutable
+expect val defaultPlatformEngine: HttpClientEngine
+
+class TheMovieDBClient {
+    private val BASE_URL: String = "api.themoviedb.org"
+    private val API_KEY: String = "7aeaa9d72de6df534afb8b71ac7d82eb"
 
     @OptIn(InternalAPI::class)
     private val BASE_PARAM = StringValues.build {
@@ -33,13 +39,15 @@ object TheMovieDBClient {
         append("adult","false")
     }
 
-    private val httpClient = HttpClient() {
-        install(JsonFeature) {
-            val json = Json {
+    private val httpClient = HttpClient(defaultPlatformEngine) {
+        install(ContentNegotiation) {
+            json(Json {
                 ignoreUnknownKeys = true
-                useAlternativeNames = false
-            }
-            serializer = KotlinxSerializer(json)
+            })
+        }
+        install(Logging) {
+            logger = Logger.DEFAULT
+            level = LogLevel.ALL
         }
     }
 
@@ -60,7 +68,7 @@ object TheMovieDBClient {
     suspend fun trending(
         mediaType: TheMovieDBMediaType,
         timeWindow: TheMovieDBTimeWindow
-    ) : TheMovieDBResponse<MovieSearchResult> = withContext(Dispatchers.Default) {
+    ) : TheMovieDBResponse<MovieSearchResult> {
         val request = getRequest(
             TheMovieDBRequest.Trending(
                 mediaType = TheMovieDBRequest.Path.MediaType(mediaType),
@@ -68,7 +76,7 @@ object TheMovieDBClient {
             )
         )
 
-        httpClient.get(request)
+        return httpClient.get(request).body()
     }
 
     @OptIn(InternalAPI::class)
@@ -76,10 +84,10 @@ object TheMovieDBClient {
         sortby: String,
         voteAverage: String,
         page: Int,
-        genres: MutableList<TheMovieDBMovieGenre>? = null,
+        genres: List<TheMovieDBMovieGenre>? = null,
         releaseAfter: String? = null,
         releaseBefore: String? = null
-    ) : TheMovieDBResponse<MovieSearchResult> = withContext(Dispatchers.Default) {
+    ) : TheMovieDBResponse<MovieSearchResult> {
 
         val queryParams = mutableListOf(
             TheMovieDBRequest.Query.SortBy(sortby),
@@ -104,36 +112,40 @@ object TheMovieDBClient {
             )
         )
 
-        httpClient.get(request)
+        return httpClient.get(request).body()
     }
 
-    suspend fun getMovie(movieId: Long): Movie = withContext(Dispatchers.Default) {
+    suspend fun getMovie(movieId: Long): Movie {
         val request = getRequest(
             TheMovieDBRequest.MovieDetails(
                 movieId = movieId
             )
         )
 
-        httpClient.get(request)
+        return httpClient.get(request).body()
     }
 
-    suspend fun getMovieCredits(movieId: Long): MovieCredits = withContext(Dispatchers.Default) {
+    suspend fun getMovieCredits(movieId: Long): MovieCredits {
         val request = getRequest(
             TheMovieDBRequest.MovieCredits(
                 movieId = movieId
             )
         )
 
-        httpClient.get(request)
+        return httpClient.get(request).body()
     }
 
-    suspend fun getPerson(personId: Long): Person = withContext(Dispatchers.Default) {
+    suspend fun getPerson(personId: Long): Person {
         val request = getRequest(
             TheMovieDBRequest.Person(
                 personId = personId
             )
         )
 
-        httpClient.get(request)
+        return httpClient.get(request).body()
+    }
+
+    companion object {
+        val apiDatePattern = "yyyy-MM-dd"
     }
 }

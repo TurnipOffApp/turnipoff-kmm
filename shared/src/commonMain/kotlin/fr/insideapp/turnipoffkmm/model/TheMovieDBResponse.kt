@@ -2,6 +2,7 @@ package fr.insideapp.turnipoffkmm.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.native.concurrent.SharedImmutable
 
 @Serializable
 data class TheMovieDBResponse<T>(

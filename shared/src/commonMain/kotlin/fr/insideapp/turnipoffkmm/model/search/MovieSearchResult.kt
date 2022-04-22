@@ -1,7 +1,7 @@
 package fr.insideapp.turnipoffkmm.model.search
 
+import fr.insideapp.turnipoffkmm.model.Date
 import fr.insideapp.turnipoffkmm.network.utils.DateSerializer
-import java.time.LocalDate
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,7 +27,7 @@ class MovieSearchResult(
     val originalLanguage: String,
     @SerialName( "release_date")
     @Serializable(DateSerializer::class)
-    val releaseDate: LocalDate?,
+    val releaseDate: Date?,
     @SerialName("popularity")
     val popularity: Double,
     @SerialName("video")

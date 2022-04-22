@@ -1,9 +1,8 @@
 package fr.insideapp.turnipoffkmm.model.person
 
-import fr.insideapp.turnipoffkmm.formatForDisplay
+import fr.insideapp.turnipoffkmm.model.Date
 import fr.insideapp.turnipoffkmm.network.utils.DateSerializer
 import fr.insideapp.turnipoffkmm.network.utils.GenderSerializer
-import java.time.LocalDate
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -25,10 +24,10 @@ data class Person(
     val biography: String?,
     @SerialName("deathday")
     @Serializable(DateSerializer::class)
-    val deathday: LocalDate?,
+    val deathday: Date?,
     @SerialName("birthday")
     @Serializable(DateSerializer::class)
-    val birthday: LocalDate?,
+    val birthday: Date?,
     @SerialName("known_for_department")
     val department: String,
     @SerialName("place_of_birth")
@@ -42,8 +41,8 @@ data class Person(
     val gender: Gender,
 ) {
     val birthDate: String?
-        get() = birthday?.let { it.formatForDisplay() }
+        get() = birthday?.let { it.prettyString() }
 
     val deathDate: String?
-        get() = deathday?.let { it.formatForDisplay() }
+        get() = deathday?.let { it.prettyString() }
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import fr.insideapp.turnipoffkmm.android.R
 import fr.insideapp.turnipoffkmm.network.PictureSizes
 import fr.insideapp.turnipoffkmm.android.ui.theme.Margin
@@ -237,7 +239,9 @@ private fun CreditItem(credit: MovieCredits.Credit, navigateTo: NavigateTo = {})
             if(creditPath != null) {
                 Image(
                     painter = rememberAsyncImagePainter(
-                        model = PictureSizes.Profile.W185.buildURL(creditPath),
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(PictureSizes.Profile.W185.buildURL(creditPath))
+                            .build(),
                         placeholder = painterResource(id = R.drawable.missing_picture)
                     ),
                     contentScale = ContentScale.FillWidth,

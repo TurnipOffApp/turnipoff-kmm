@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import fr.insideapp.turnipoffkmm.android.logic.Service
 import fr.insideapp.turnipoffkmm.model.movie.Movie
 import fr.insideapp.turnipoffkmm.model.movie.MovieCredits
 import fr.insideapp.turnipoffkmm.network.TheMovieDBClient
@@ -22,7 +23,7 @@ class MovieScreenViewModel(val movieId: Long): ViewModel() {
 
     fun refreshMovie() {
         viewModelScope.launch {
-            val movieResult = TheMovieDBClient.getMovie(
+            val movieResult = Service.getInstance().client.getMovie(
                 movieId = movieId
             )
 
@@ -32,7 +33,7 @@ class MovieScreenViewModel(val movieId: Long): ViewModel() {
 
     fun refreshMovieCredits() {
         viewModelScope.launch {
-            val movieCreditsResult = TheMovieDBClient.getMovieCredits(
+            val movieCreditsResult = Service.getInstance().client.getMovieCredits(
                 movieId = movieId
             )
 

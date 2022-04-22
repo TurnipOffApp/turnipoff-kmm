@@ -25,7 +25,7 @@ data class MovieCredits(
         @Serializable(GenderSerializer::class)
         val gender: Gender,
         @SerialName("known_for_department")
-        val knownForDepartment: String,
+        val knownForDepartment: String = "",
         @SerialName("name")
         val name: String,
         @SerialName("original_name")

@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import fr.insideapp.turnipoffkmm.android.logic.Service
 import fr.insideapp.turnipoffkmm.model.TheMovieDBMovieGenre
 import fr.insideapp.turnipoffkmm.model.TheMovieDBResponse
 import fr.insideapp.turnipoffkmm.model.search.MovieSearchResult
@@ -52,7 +53,7 @@ class HomeScreenSectionViewModel() : ViewModel() {
                 val newPage = worstActionMovies.page + 1
 
                 try {
-                    val moviesResult = TheMovieDBClient.discover(
+                    val moviesResult = Service.getInstance().client.discover(
                         genres = mutableListOf(TheMovieDBMovieGenre.Action),
                         sortby = "vote_average.asc",
                         voteAverage = "1",
@@ -78,7 +79,7 @@ class HomeScreenSectionViewModel() : ViewModel() {
                 val newPage = worst90sMovies.page + 1
 
                 try {
-                    val moviesResult = TheMovieDBClient.discover(
+                    val moviesResult = Service.getInstance().client.discover(
                         sortby = "vote_average.asc",
                         voteAverage = "1",
                         page = newPage,
@@ -104,7 +105,7 @@ class HomeScreenSectionViewModel() : ViewModel() {
                 val newPage = worst80sMovies.page + 1
 
                 try {
-                    val moviesResult = TheMovieDBClient.discover(
+                    val moviesResult = Service.getInstance().client.discover(
                         sortby = "vote_average.asc",
                         voteAverage = "1",
                         page = newPage,
@@ -130,7 +131,7 @@ class HomeScreenSectionViewModel() : ViewModel() {
                 val newPage = worstComedyMovies.page + 1
 
                 try {
-                    val moviesResult = TheMovieDBClient.discover(
+                    val moviesResult = Service.getInstance().client.discover(
                         genres = mutableListOf(TheMovieDBMovieGenre.Comedy),
                         sortby = "vote_average.asc",
                         voteAverage = "1",

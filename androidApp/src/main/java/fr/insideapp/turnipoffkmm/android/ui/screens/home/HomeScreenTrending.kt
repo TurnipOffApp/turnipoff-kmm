@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.google.accompanist.pager.*
 import fr.insideapp.turnipoffkmm.network.PictureSizes
 import fr.insideapp.turnipoffkmm.android.ui.theme.Margin
@@ -54,7 +56,11 @@ private fun HomeScreenTrendingList(navController: NavController, pagerState: Pag
 
         if(posterPath != null) {
             Image(
-                painter = rememberAsyncImagePainter(PictureSizes.Poster.W342.buildURL(posterPath)),
+                painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(PictureSizes.Poster.W342.buildURL(posterPath))
+                        .build()
+                ),
                 contentDescription = null,
                 modifier = Modifier.clickable {
                     navController.navigate("movie/${listTrending[page].id}")

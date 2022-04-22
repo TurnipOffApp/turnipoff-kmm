@@ -12,10 +12,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.google.accompanist.pager.ExperimentalPagerApi
 import fr.insideapp.turnipoffkmm.network.PictureSizes
 import fr.insideapp.turnipoffkmm.android.ui.theme.Margin
@@ -58,7 +60,9 @@ fun HomeScreenSection(navController: NavController, holder: HomeScreenSectionDat
                     if(posterPath != null) {
                         Image(
                             painter = rememberAsyncImagePainter(
-                                model = PictureSizes.Poster.W342.buildURL(posterPath),
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(PictureSizes.Poster.W342.buildURL(posterPath))
+                                    .build(),
                                 placeholder = painterResource(id = R.drawable.missing_picture)
                             ),
                             contentScale = ContentScale.Crop,

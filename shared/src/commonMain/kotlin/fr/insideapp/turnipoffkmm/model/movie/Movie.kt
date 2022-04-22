@@ -1,10 +1,10 @@
 package fr.insideapp.turnipoffkmm.model.movie
 
+import fr.insideapp.turnipoffkmm.model.Date
 import fr.insideapp.turnipoffkmm.network.utils.DateSerializer
-import fr.insideapp.turnipoffkmm.network.utils.DurationSerializer
+import fr.insideapp.turnipoffkmm.network.utils.RuntimeSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.time.LocalDate
 import kotlin.time.Duration
 
 @Serializable
@@ -41,11 +41,11 @@ data class Movie(
     val productionCountries: List<ProductionCountry>,
     @SerialName("release_date")
     @Serializable(DateSerializer::class)
-    val releaseDate: LocalDate?,
+    val releaseDate: Date?,
     @SerialName("revenue")
     val revenue: Long,
     @SerialName("runtime")
-    @Serializable(DurationSerializer::class)
+    @Serializable(RuntimeSerializer::class)
     val runtime: Duration,
     @SerialName("spoken_languages")
     val spokenLanguages: List<SpokenLanguage>,
