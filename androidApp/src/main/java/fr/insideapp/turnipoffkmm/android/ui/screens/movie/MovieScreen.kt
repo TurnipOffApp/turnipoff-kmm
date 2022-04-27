@@ -1,22 +1,20 @@
 package fr.insideapp.turnipoffkmm.android.ui.screens.movie
 
-import android.os.Build
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -25,31 +23,57 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 import fr.insideapp.turnipoffkmm.android.R
-import fr.insideapp.turnipoffkmm.network.PictureSizes
 import fr.insideapp.turnipoffkmm.android.ui.theme.Margin
 import fr.insideapp.turnipoffkmm.model.movie.MovieCredits
+import fr.insideapp.turnipoffkmm.network.PictureSizes
 
-private typealias NavigateTo = (personId: Long) -> Unit
+private typealias NavigateTo = (personName: String, personId: Long) -> Unit
 
 @Composable
-fun MovieScreen(navController: NavController, movieId: Long) {
+fun MovieScreen(navController: NavController, movieName: String, movieId: Long) {
     val scrollState = rememberScrollState()
     val viewModel: MovieScreenViewModel = viewModel(factory = MovieScreenViewModelFactory(movieId))
 
-    Column(
-        modifier = Modifier.verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(Margin.medium)
-    ) {
-        MovieDetails(viewModel = viewModel)
-        MovieCredits(
-            viewModel = viewModel,
-            navigateTo = { personId ->
-                navController.navigate("person/${personId}")
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = movieName
+                    )
+                },
+                navigationIcon = if (navController.previousBackStackEntry != null) {
+                    {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    }
+                } else {
+                    null
+                },
+                backgroundColor = MaterialTheme.colors.primary
+            )
+        },
+        content = {
+            Column(
+                modifier = Modifier.verticalScroll(scrollState),
+                verticalArrangement = Arrangement.spacedBy(Margin.medium)
+            ) {
+                MovieDetails(viewModel = viewModel)
+                MovieCredits(
+                    viewModel = viewModel,
+                    navigateTo = { personName, personId ->
+                        navController.navigate("person/${personName}/${personId}")
+                    }
+                )
             }
-        )
-    }
+        }
+    )
+
 }
 
 @Composable
@@ -141,9 +165,10 @@ private fun MovieDetails(viewModel: MovieScreenViewModel) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(Margin.medium)
                     ) {
-                        Text(text = movie.releaseYear)
-                        Text(text = " - ")
-                        Text(text = movie.runtime.toString())
+                        Text(
+                            text = "${movie.releaseDate?.year ?: "N/A"}"
+                        )
+                        Text(text = movie.productionCountries.joinToString(",") { it.name })
                     }
                 }
             }
@@ -167,7 +192,7 @@ private fun MovieDetails(viewModel: MovieScreenViewModel) {
 }
 
 @Composable
-private fun MovieCredits(viewModel: MovieScreenViewModel, navigateTo: NavigateTo = {}) {
+private fun MovieCredits(viewModel: MovieScreenViewModel, navigateTo: NavigateTo = {_,_ -> }) {
     val movieCredits = viewModel.movieCredits
 
     if(movieCredits != null) {
@@ -197,7 +222,7 @@ private fun MovieCredits(viewModel: MovieScreenViewModel, navigateTo: NavigateTo
 }
 
 @Composable
-private fun CreditList(title: String, credits: List<MovieCredits.Credit>, navigateTo: NavigateTo = {}) {
+private fun CreditList(title: String, credits: List<MovieCredits.Credit>, navigateTo: NavigateTo = {_,_ -> }) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Margin.medium)
     ) {
@@ -222,7 +247,7 @@ private fun CreditList(title: String, credits: List<MovieCredits.Credit>, naviga
 }
 
 @Composable
-private fun CreditItem(credit: MovieCredits.Credit, navigateTo: NavigateTo = {}) {
+private fun CreditItem(credit: MovieCredits.Credit, navigateTo: NavigateTo = {_,_ -> }) {
     val creditPath = credit.profilePath
     Column(
         modifier = Modifier.width(80.dp),
@@ -233,15 +258,13 @@ private fun CreditItem(credit: MovieCredits.Credit, navigateTo: NavigateTo = {})
             elevation = Margin.medium,
             shape = RoundedCornerShape(Margin.medium),
             modifier = Modifier.clickable {
-                navigateTo(credit.id)
+                navigateTo(credit.name, credit.id)
             }
         ) {
             if(creditPath != null) {
                 Image(
                     painter = rememberAsyncImagePainter(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(PictureSizes.Profile.W185.buildURL(creditPath))
-                            .build(),
+                        model = PictureSizes.Profile.W185.buildURL(creditPath),
                         placeholder = painterResource(id = R.drawable.missing_picture)
                     ),
                     contentScale = ContentScale.FillWidth,

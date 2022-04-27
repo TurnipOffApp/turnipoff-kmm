@@ -15,6 +15,12 @@ class SectionViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var page: Int = 0
     private var pageMax: Int = 1
+    
+    private var dateFormatter: DateFormatter = {
+        let aoDateFormatter = DateFormatter()
+        aoDateFormatter.dateFormat = "yyyy-MM-dd"
+        return aoDateFormatter
+    }()
 
     @Published private(set) var isLoadingPage = false
     @Published private(set) var movies: [MovieSearchResult]
@@ -29,19 +35,30 @@ class SectionViewModel: ObservableObject {
     @MainActor
     func getMovies() async {
         do {
+            var lowerDate: String? = nil
+            var upperDate: String? = nil
+            
+            if let date = config.releaseDate?.lowerBound {
+                lowerDate = dateFormatter.string(from: date)
+            }
+            
+            if let date = config.releaseDate?.upperBound {
+                upperDate = dateFormatter.string(from: date)
+            }
+            
             let result: TheMovieDBResponse<MovieSearchResult> = try await Service
                 .shared
                 .client
                 .discover(
                     sortby: "vote_average.asc",
-                    voteAverage: "1",
+                    voteCount: 25,
                     page: Int32(page) + 1,
                     genres: config.category.genres,
-                    releaseAfter: "",
-                    releaseBefore: ""
+                    releaseAfter: lowerDate,
+                    releaseBefore: upperDate
                 )
         
-            movies = result.results as? [MovieSearchResult] ?? []
+            movies += result.results as? [MovieSearchResult] ?? []
         } catch {
             movies = []
         }

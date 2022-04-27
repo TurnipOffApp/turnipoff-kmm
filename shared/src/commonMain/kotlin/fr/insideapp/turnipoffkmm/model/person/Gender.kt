@@ -1,6 +1,5 @@
 package fr.insideapp.turnipoffkmm.model.person
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable

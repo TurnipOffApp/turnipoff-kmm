@@ -2,11 +2,10 @@ package fr.insideapp.turnipoffkmm.android.ui.screens.home
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,94 +17,76 @@ import fr.insideapp.turnipoffkmm.android.ui.theme.Margin
 @Composable
 fun HomeScreen(navController: NavController) {
     val configuration = LocalConfiguration.current
-    val viewModel: HomeScreenViewModel = viewModel()
     val scrollState = rememberScrollState()
 
-    Column(
-        modifier = Modifier.verticalScroll(scrollState),
-        verticalArrangement = Arrangement.spacedBy(Margin.medium)
-    ) {
-        HomeScreenTrending(
-            navController = navController,
-            viewModel = viewModel,
-            configuration = configuration
-        )
-
-        Divider(
-            modifier = Modifier.background(Color.Gray)
-        )
-
-        WorstActionMovies(navController)
-
-        Divider(
-            modifier = Modifier.background(Color.Gray)
-        )
-
-        Worst90Movies(navController)
-
-        Divider(
-            modifier = Modifier.background(Color.Gray)
-        )
-
-        Worst80Movies(navController)
-
-        Divider(
-            modifier = Modifier.background(Color.Gray)
-        )
-
-        WorstComedyMovies(navController)
-    }
-}
-
-@Composable
-fun HomeScreenTrending(navController: NavController, viewModel: HomeScreenViewModel, configuration: Configuration) {
-    val trendingMovies = viewModel.movieTrending
-
-    HomeScreenTrending(
-        navController = navController,
-        trendingMovies = trendingMovies,
-        configuration = configuration
+    val sections = listOf(
+        HomeScreenSectionDataHolder.Type.WorstAction,
+        HomeScreenSectionDataHolder.Type.Worst90,
+        HomeScreenSectionDataHolder.Type.Worst80,
+        HomeScreenSectionDataHolder.Type.WorstComedy
     )
 
-    viewModel.getMovieTrendingList()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "TurnipOFF"
+                    )
+                },
+                backgroundColor = MaterialTheme.colors.primary
+            )
+        },
+        content = {
+            Column(
+                modifier = Modifier.verticalScroll(scrollState),
+                verticalArrangement = Arrangement.spacedBy(Margin.medium)
+            ) {
+                Trending(
+                    navController = navController,
+                    configuration = configuration
+                )
+
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    sections.forEach {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight()
+                        ) {
+                            Column {
+                                Divider(
+                                    modifier = Modifier.background(Color.Gray)
+                                )
+                                Section(
+                                    navController = navController,
+                                    type = it,
+                                    configuration = configuration
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    )
 }
 
 @Composable
-fun WorstActionMovies(navController: NavController) {
-    val viewModel: HomeScreenSectionViewModel = viewModel()
-    val worstActionMovies = viewModel.worstActionMovies
-
-    HomeScreenSection(navController, worstActionMovies) {
-        viewModel.loadMore(it)
-    }
+fun Trending(navController: NavController, configuration: Configuration) {
+    HomeScreenTrending(
+        navController = navController,
+        configuration = configuration
+    )
 }
 
 @Composable
-fun Worst90Movies(navController: NavController) {
-    val viewModel: HomeScreenSectionViewModel = viewModel()
-    val worst90sMovies = viewModel.worst90sMovies
-
-    HomeScreenSection(navController, worst90sMovies) {
-        viewModel.loadMore(it)
-    }
-}
-
-@Composable
-fun Worst80Movies(navController: NavController) {
-    val viewModel: HomeScreenSectionViewModel = viewModel()
-    val worst80sMovies = viewModel.worst80sMovies
-
-    HomeScreenSection(navController, worst80sMovies) {
-        viewModel.loadMore(it)
-    }
-}
-
-@Composable
-fun WorstComedyMovies(navController: NavController) {
-    val viewModel: HomeScreenSectionViewModel = viewModel()
-    val worstComedyMovies = viewModel.worstComedyMovies
-
-    HomeScreenSection(navController, worstComedyMovies) {
-        viewModel.loadMore(it)
-    }
+fun Section(
+    navController: NavController,
+    type: HomeScreenSectionDataHolder.Type,
+    configuration: Configuration
+) {
+    HomeScreenSection(navController, type = type, configuration = configuration)
 }

@@ -7,15 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import fr.insideapp.turnipoffkmm.android.logic.Service
+import fr.insideapp.turnipoffkmm.model.movie.MovieCredits
 import fr.insideapp.turnipoffkmm.model.person.Person
-import fr.insideapp.turnipoffkmm.network.TheMovieDBClient
 import kotlinx.coroutines.launch
 
 class PersonScreenViewModel(val personId: Long): ViewModel() {
     var personDetails: Person? by mutableStateOf(null)
+    var personCredits: MovieCredits? by mutableStateOf(null)
 
     init {
         refreshPerson()
+        refreshPersonCredits()
     }
 
     fun refreshPerson() {
@@ -25,6 +27,16 @@ class PersonScreenViewModel(val personId: Long): ViewModel() {
             )
 
             personDetails = personResult
+        }
+    }
+
+    fun refreshPersonCredits() {
+        viewModelScope.launch {
+            val personCreditResult = Service.getInstance().client.getPersonCredits(
+                personId = personId
+            )
+
+            personCredits = personCreditResult
         }
     }
 }

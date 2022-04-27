@@ -26,12 +26,12 @@ extension SectionConfig {
 
         var id: Self { self }
 
-        var genres: [TheMovieDBMovieGenre] {
+        var genres: [TheMovieDBMovieGenre]? {
             switch self {
             case .action:
                 return [.action]
             case .nineties, .eighties:
-                return []
+                return nil
             case .comedy:
                 return [.comedy]
             }

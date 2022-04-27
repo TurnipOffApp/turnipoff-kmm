@@ -35,7 +35,7 @@ class TheMovieDBClient {
     private val BASE_PARAM = StringValues.build {
         append("api_key",API_KEY)
         append("language", Platform().myLang)
-        append("region", Platform().myCountry)
+        append("region", "US")
         append("adult","false")
     }
 
@@ -81,8 +81,8 @@ class TheMovieDBClient {
 
     @OptIn(InternalAPI::class)
     suspend fun discover(
-        sortby: String,
-        voteAverage: String,
+        sortby: String = "vote_average.asc",
+        voteCount: Int = 25,
         page: Int,
         genres: List<TheMovieDBMovieGenre>? = null,
         releaseAfter: String? = null,
@@ -91,7 +91,7 @@ class TheMovieDBClient {
 
         val queryParams = mutableListOf(
             TheMovieDBRequest.Query.SortBy(sortby),
-            TheMovieDBRequest.Query.VoteAverage(voteAverage),
+            TheMovieDBRequest.Query.VoteCount(voteCount),
             TheMovieDBRequest.Query.Page(page.toString())
         )
 
@@ -138,6 +138,16 @@ class TheMovieDBClient {
     suspend fun getPerson(personId: Long): Person {
         val request = getRequest(
             TheMovieDBRequest.Person(
+                personId = personId
+            )
+        )
+
+        return httpClient.get(request).body()
+    }
+
+    suspend fun getPersonCredits(personId: Long): MovieCredits {
+        val request = getRequest(
+            TheMovieDBRequest.PersonCredits(
                 personId = personId
             )
         )

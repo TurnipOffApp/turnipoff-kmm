@@ -21,13 +21,13 @@ struct SectionView: View {
                 LazyHStack {
                     ForEach(viewModel.movies) { movie in
                         let url = URL(string: PictureSizes.Poster.w342.buildURL(path: movie.posterPath ?? ""))
-                        //NavigationLink(destination: MovieView(viewModel: .init(id: movie.id))) {
-                            ImageURLRounded(url: url, contentMode: .fit)
+                        NavigationLink(destination: MovieView(viewModel: .init(id: movie.id))) {
+                            MoviePosterImage(url: url)
                                 .padding()
                                 .onAppear {
                                     viewModel.loadMoreMoviesIfNeeded(currentMovie: movie)
                                 }
-                        //}
+                        }
                     }
                 }
             }

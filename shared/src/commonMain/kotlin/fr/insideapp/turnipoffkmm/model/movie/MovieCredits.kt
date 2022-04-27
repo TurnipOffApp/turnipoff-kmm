@@ -23,17 +23,21 @@ data class MovieCredits(
         val adult: Boolean,
         @SerialName("gender")
         @Serializable(GenderSerializer::class)
-        val gender: Gender,
+        val gender: Gender = Gender.Unknown,
         @SerialName("known_for_department")
         val knownForDepartment: String = "",
         @SerialName("name")
-        val name: String,
+        val name: String = "",
+        @SerialName("title")
+        val title: String = "",
         @SerialName("original_name")
-        val originalName: String,
+        val originalName: String = "",
         @SerialName("popularity")
         val popularity: Double,
         @SerialName("profile_path")
-        val profilePath: String?,
+        val profilePath: String? = null,
+        @SerialName("poster_path")
+        val posterPath: String? = null,
         @SerialName("cast_id")
         val castID: Long? = null,
         @SerialName("character")

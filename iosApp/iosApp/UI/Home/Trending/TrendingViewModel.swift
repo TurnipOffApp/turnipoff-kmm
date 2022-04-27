@@ -21,7 +21,15 @@ final class TrendingViewModel: ObservableObject {
     @MainActor
     func getTrendingList() async {
         do {
-            let result: TheMovieDBResponse<MovieSearchResult> = try await Service.shared.client.trending(mediaType: .movie, timeWindow: .week)
+            let result: TheMovieDBResponse<MovieSearchResult> = try await Service.shared.client.discover(
+                sortby: "vote_average.asc",
+                voteCount: 25,
+                page: 1,
+                genres: nil,
+                releaseAfter: nil,
+                releaseBefore: nil
+            )
+            
         
             movies = result.results as? [MovieSearchResult] ?? []
         } catch {
