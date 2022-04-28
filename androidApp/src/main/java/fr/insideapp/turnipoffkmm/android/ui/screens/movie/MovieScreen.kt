@@ -27,6 +27,7 @@ import fr.insideapp.turnipoffkmm.android.R
 import fr.insideapp.turnipoffkmm.android.ui.theme.Margin
 import fr.insideapp.turnipoffkmm.model.movie.MovieCredits
 import fr.insideapp.turnipoffkmm.network.PictureSizes
+import kotlin.time.DurationUnit
 
 private typealias NavigateTo = (personName: String, personId: Long) -> Unit
 
@@ -136,14 +137,15 @@ private fun MovieDetails(viewModel: MovieScreenViewModel) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = Margin.normal)
+                    .padding(horizontal = Margin.normal),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     modifier = Modifier
                         .width(60.dp)
                         .height(60.dp)
                         .border(width = 1.dp, color = Color.Gray, shape = CircleShape),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         fontWeight = FontWeight.Bold,
@@ -154,7 +156,7 @@ private fun MovieDetails(viewModel: MovieScreenViewModel) {
                 Column(
                     modifier = Modifier
                         .weight(1.0f)
-                        .height(60.dp),
+                        .wrapContentHeight(),
                     horizontalAlignment = Alignment.End,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -162,14 +164,16 @@ private fun MovieDetails(viewModel: MovieScreenViewModel) {
                         fontWeight = FontWeight.Bold,
                         text = movie.title
                     )
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(Margin.medium)
-                    ) {
-                        Text(
-                            text = "${movie.releaseDate?.year ?: "N/A"}"
-                        )
-                        Text(text = movie.productionCountries.joinToString(",") { it.name })
-                    }
+                    Text(
+                        fontWeight = FontWeight.Bold,
+                        text = movie.genresString
+                    )
+                    Text(
+                        text = movie.releaseYear
+                    )
+                    Text(
+                        text = movie.duration
+                    )
                 }
             }
 

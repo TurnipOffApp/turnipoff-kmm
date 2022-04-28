@@ -29,7 +29,7 @@ data class MovieCredits(
         @SerialName("name")
         val name: String = "",
         @SerialName("title")
-        val title: String = "",
+        val movieTitle: String = "",
         @SerialName("original_name")
         val originalName: String = "",
         @SerialName("popularity")
@@ -49,15 +49,26 @@ data class MovieCredits(
         @SerialName("department")
         val department: String = "",
         @SerialName("job")
-        val job: String? = ""
+        val job: String? = "",
+        @SerialName("vote_average")
+        val average: Float = 0.0f
     ) {
-        val subtitle: String
+        val title: String
             get() = if(!character.isNullOrBlank()) {
                 character
             } else if(!job.isNullOrBlank()) {
                 job
             } else {
                 "No role"
+            }
+
+        val subtitle: String
+            get() = if(!name.isNullOrBlank()) {
+                name
+            } else if(!movieTitle.isNullOrBlank()) {
+                movieTitle
+            } else {
+                "No name"
             }
     }
 }

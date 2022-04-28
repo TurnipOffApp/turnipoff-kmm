@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "closure #1 in closure #1 in CreditView.body.getter:CreditView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "credit.profilePath">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in MovieDescriptionView.body.getter:MovieDescriptionView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "movie.runtime">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in closure #1 in closure #1 in PersonDescriptionView.body.getter:PersonDescriptionView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Self.dateFormatter">
+            </PersistentString>
+            <PersistentString
+               value = "Self.dateFormatter.string(from: birthday)">
+            </PersistentString>
+            <PersistentString
+               value = "birthday.year">
+            </PersistentString>
+            <PersistentString
+               value = "dateFormatter.string(from: birthday)">
+            </PersistentString>
+            <PersistentString
+               value = "person.birthday">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

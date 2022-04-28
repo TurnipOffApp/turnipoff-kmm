@@ -20,9 +20,11 @@ struct CreditView: View {
     var body: some View {
         VStack(alignment: .center) {
             NavigationLink(destination: self.destination) {
-                MoviePosterImage(
-                    url: URL(string: PictureSizes.Poster.w342.buildURL(path: credit.profilePath ?? ""))
-                )
+                if let profilePath = credit.profilePath, !profilePath.isEmpty {
+                    MoviePosterImage(url: URL(string: PictureSizes.Profile.w185.buildURL(path: profilePath)))
+                } else {
+                    MoviePosterImage(url: URL(string: PictureSizes.Poster.w342.buildURL(path: credit.posterPath ?? "")))
+                }
             }
 
             Text(credit.title)
@@ -35,7 +37,12 @@ struct CreditView: View {
 
     @ViewBuilder
     private var destination: some View {
-        MovieView(viewModel: .init(id: credit.id))
+        if(credit.movieTitle == "") {
+            PersonView(viewModel: .init(id: credit.id))
+        } else {
+            MovieView(viewModel: .init(id: credit.id))
+        }
+        
         /*switch credit.type {
         case .movie:
             MovieView(viewModel: .init(id: credit.id))

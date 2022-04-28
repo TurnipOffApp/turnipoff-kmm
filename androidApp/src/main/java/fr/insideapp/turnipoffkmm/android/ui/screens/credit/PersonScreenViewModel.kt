@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 class PersonScreenViewModel(val personId: Long): ViewModel() {
     var personDetails: Person? by mutableStateOf(null)
     var personCredits: MovieCredits? by mutableStateOf(null)
+    var personAverage: Double by mutableStateOf(0.0)
 
     init {
         refreshPerson()
@@ -37,6 +38,7 @@ class PersonScreenViewModel(val personId: Long): ViewModel() {
             )
 
             personCredits = personCreditResult
+            personAverage = personCreditResult.cast.map { it.average }.average()
         }
     }
 }

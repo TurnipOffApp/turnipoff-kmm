@@ -65,6 +65,12 @@ data class Movie(
     val releaseYear: String
         get() = releaseDate?.year.let { it.toString() }
 
+    val duration: String
+        get() = runtime.toString()
+
+    val genresString: String
+        get() = genres.joinToString(", ") { it.name }
+
     @Serializable
     data class Genre(
         @SerialName("id")
