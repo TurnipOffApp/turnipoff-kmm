@@ -9,18 +9,15 @@ import fr.insideapp.turnipoffkmm.model.movie.Movie
 import fr.insideapp.turnipoffkmm.model.movie.MovieCredits
 import fr.insideapp.turnipoffkmm.model.person.Person
 import fr.insideapp.turnipoffkmm.model.search.MovieSearchResult
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.kotlinx.serializer.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
 

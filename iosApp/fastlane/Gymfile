@@ -1,0 +1,6 @@
+scheme("iosApp")
+configuration("Release")
+clean(true)
+output_directory("./build")
+output_name("TurnipKMM")
+export_method("ad-hoc")

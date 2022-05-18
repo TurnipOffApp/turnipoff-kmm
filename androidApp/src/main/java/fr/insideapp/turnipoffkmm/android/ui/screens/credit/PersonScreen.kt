@@ -94,7 +94,6 @@ private fun PersonDetails(viewModel: PersonScreenViewModel) {
                             modifier = Modifier
                                 .padding(Margin.normal)
                                 .fillMaxHeight(),
-                            elevation = Margin.medium,
                             shape = RoundedCornerShape(Margin.medium)
                         ) {
                             Image(
@@ -250,7 +249,6 @@ private fun CreditItem(credit: MovieCredits.Credit, navigateTo: NavigateTo = { _
         verticalArrangement = Arrangement.spacedBy(Margin.medium)
     ) {
         Card(
-            elevation = Margin.medium,
             shape = RoundedCornerShape(Margin.medium),
             modifier = Modifier.clickable {
                 navigateTo(credit.title, credit.id)

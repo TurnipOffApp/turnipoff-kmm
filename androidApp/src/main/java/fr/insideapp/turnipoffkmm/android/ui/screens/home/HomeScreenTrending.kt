@@ -69,13 +69,12 @@ private fun HomeScreenTrendingList(navController: NavController, pagerState: Pag
                     navController.navigate("movie/${trendingMovies[page].title}/${trendingMovies[page].id}")
                 }
                 .wrapContentWidth(),
-            elevation = 8.dp,
             shape = RoundedCornerShape(8.dp)
         ) {
             if(posterPath != null) {
                 Image(
                     painter = rememberAsyncImagePainter(
-                        model = PictureSizes.Poster.W342.buildURL(posterPath),
+                        model = PictureSizes.Poster.W185.buildURL(posterPath),
                         placeholder = painterResource(id = R.drawable.missing_picture)
                     ),
                     contentScale = ContentScale.FillHeight,

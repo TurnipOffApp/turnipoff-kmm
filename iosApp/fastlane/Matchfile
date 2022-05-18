@@ -1,0 +1,6 @@
+storage_mode("git")
+git_url("git@gitlab.com:insideapp/test-projects/fastlane/apple-certificates-profiles.git")
+git_branch("inside-app")
+app_identifier("fr.insideapp.TurnipKMM")
+type("adhoc")
+username("iosdev@insideapp.fr")

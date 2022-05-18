@@ -112,12 +112,11 @@ private fun MovieDetails(viewModel: MovieScreenViewModel) {
                             modifier = Modifier
                                 .padding(Margin.normal)
                                 .fillMaxHeight(),
-                            elevation = Margin.medium,
                             shape = RoundedCornerShape(Margin.medium)
                         ) {
                             Image(
                                 painter = rememberAsyncImagePainter(
-                                    model = PictureSizes.Poster.W500.buildURL(posterPath),
+                                    model = PictureSizes.Poster.W185.buildURL(posterPath),
                                     placeholder = painterResource(id = R.drawable.missing_picture)
                                 ),
                                 contentScale = ContentScale.FillHeight,
@@ -259,7 +258,6 @@ private fun CreditItem(credit: MovieCredits.Credit, navigateTo: NavigateTo = {_,
         verticalArrangement = Arrangement.spacedBy(Margin.medium)
     ) {
         Card(
-            elevation = Margin.medium,
             shape = RoundedCornerShape(Margin.medium),
             modifier = Modifier.clickable {
                 navigateTo(credit.name, credit.id)

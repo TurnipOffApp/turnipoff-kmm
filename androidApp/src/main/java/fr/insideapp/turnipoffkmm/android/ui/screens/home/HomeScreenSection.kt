@@ -62,7 +62,6 @@ fun HomeScreenSection(navController: NavController, type: HomeScreenSectionDataH
                             navController.navigate("movie/${item.title}/${item.id}")
                         }
                         .padding(8.dp),
-                    elevation = 8.dp,
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     if(posterPath != null) {

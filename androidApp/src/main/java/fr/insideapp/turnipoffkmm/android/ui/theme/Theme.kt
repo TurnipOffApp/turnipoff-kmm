@@ -32,7 +32,7 @@ fun TurnipOffTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
-        LightColorPalette
+        DarkColorPalette
     }
 
     MaterialTheme(
