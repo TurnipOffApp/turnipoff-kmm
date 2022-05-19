@@ -253,15 +253,16 @@ private fun CreditList(title: String, credits: List<MovieCredits.Credit>, naviga
 private fun CreditItem(credit: MovieCredits.Credit, navigateTo: NavigateTo = {_,_ -> }) {
     val creditPath = credit.profilePath
     Column(
-        modifier = Modifier.width(80.dp),
+        modifier = Modifier
+            .width(80.dp)
+            .clickable {
+                navigateTo(credit.name, credit.id)
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Margin.medium)
     ) {
         Card(
             shape = RoundedCornerShape(Margin.medium),
-            modifier = Modifier.clickable {
-                navigateTo(credit.name, credit.id)
-            }
         ) {
             if(creditPath != null) {
                 Image(

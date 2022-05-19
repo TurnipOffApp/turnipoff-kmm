@@ -17,7 +17,7 @@ struct MovieView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     if let movie = viewModel.movie {
-                        MovieHeaderView(movie: movie).frame(width: geometry.size.width, height: geometry.size.height * 0.4)
+                        MovieHeaderView(movie: movie).frame(width: geometry.size.width, height: geometry.size.height * 0.3)
                         Divider()
                         MovieDescriptionView(movie: movie)
                         Divider()
