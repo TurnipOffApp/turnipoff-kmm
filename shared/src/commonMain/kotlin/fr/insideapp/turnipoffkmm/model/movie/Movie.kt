@@ -1,5 +1,6 @@
 package fr.insideapp.turnipoffkmm.model.movie
 
+import com.benasher44.uuid.uuid4
 import fr.insideapp.turnipoffkmm.model.Date
 import fr.insideapp.turnipoffkmm.network.utils.DateSerializer
 import fr.insideapp.turnipoffkmm.network.utils.RuntimeSerializer
@@ -70,6 +71,8 @@ data class Movie(
 
     val genresString: String
         get() = genres.joinToString(", ") { it.name }
+
+    val internalID = uuid4().toString()
 
     @Serializable
     data class Genre(

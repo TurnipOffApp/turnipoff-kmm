@@ -1,5 +1,8 @@
 package fr.insideapp.turnipoffkmm.model.movie
 
+import com.benasher44.uuid.Uuid
+import com.benasher44.uuid.uuid4
+import com.benasher44.uuid.uuidOf
 import fr.insideapp.turnipoffkmm.model.person.Gender
 import fr.insideapp.turnipoffkmm.network.utils.GenderSerializer
 import kotlinx.serialization.SerialName
@@ -54,6 +57,15 @@ data class MovieCredits(
         val average: Float = 0.0f
     ) {
         val title: String
+            get() = if(!name.isNullOrBlank()) {
+                name
+            } else if(!movieTitle.isNullOrBlank()) {
+                movieTitle
+            } else {
+                "No name"
+            }
+
+        val subtitle: String
             get() = if(!character.isNullOrBlank()) {
                 character
             } else if(!job.isNullOrBlank()) {
@@ -62,13 +74,6 @@ data class MovieCredits(
                 "No role"
             }
 
-        val subtitle: String
-            get() = if(!name.isNullOrBlank()) {
-                name
-            } else if(!movieTitle.isNullOrBlank()) {
-                movieTitle
-            } else {
-                "No name"
-            }
+        val internalID = uuid4().toString()
     }
 }

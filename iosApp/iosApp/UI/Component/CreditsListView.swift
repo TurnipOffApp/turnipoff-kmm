@@ -24,7 +24,7 @@ struct CreditsListView: View {
                 .font(.headline)
             ScrollView(.horizontal) {
                 LazyHStack {
-                    ForEach(credit, id: \.title) {
+                    ForEach(credit, id: \.internalID) {
                         CreditView(credit: $0)
                     }
                 }

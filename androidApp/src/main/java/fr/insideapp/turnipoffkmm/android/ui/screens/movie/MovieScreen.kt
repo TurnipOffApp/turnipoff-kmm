@@ -85,27 +85,13 @@ private fun MovieDetails(viewModel: MovieScreenViewModel) {
         Column(
             verticalArrangement = Arrangement.spacedBy(Margin.medium)
         ) {
-            val backdropPath = movie.backdropPath
             val posterPath = movie.posterPath
-            if(backdropPath != null || posterPath != null) {
+            if(posterPath != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(220.dp)
                 ) {
-                    if(backdropPath != null) {
-                        Image(
-                            painter = rememberAsyncImagePainter(
-                                model = PictureSizes.Backdrop.W700.buildURL(backdropPath),
-                                placeholder = painterResource(id = R.drawable.missing_picture)
-                            ),
-                            contentScale = ContentScale.FillWidth,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .blur(radius = 16.dp)
-                        )
-                    }
 
                     if(posterPath != null) {
                         Card(

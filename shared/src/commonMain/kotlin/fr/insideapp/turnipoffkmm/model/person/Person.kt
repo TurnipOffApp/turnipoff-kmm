@@ -1,5 +1,6 @@
 package fr.insideapp.turnipoffkmm.model.person
 
+import com.benasher44.uuid.uuid4
 import fr.insideapp.turnipoffkmm.model.Date
 import fr.insideapp.turnipoffkmm.network.utils.DateSerializer
 import fr.insideapp.turnipoffkmm.network.utils.GenderSerializer
@@ -45,4 +46,6 @@ data class Person(
 
     val deathDate: String?
         get() = deathday?.let { it.prettyString() }
+
+    val internalID = uuid4().toString()
 }

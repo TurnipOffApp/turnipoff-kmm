@@ -3,6 +3,26 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in closure #1 in closure #1 in PersonDescriptionView.body.getter:PersonDescriptionView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "birthday.year">
+            </PersistentString>
+            <PersistentString
+               value = "Self.dateFormatter.string(from: birthday)">
+            </PersistentString>
+            <PersistentString
+               value = "person.birthday">
+            </PersistentString>
+            <PersistentString
+               value = "dateFormatter.string(from: birthday)">
+            </PersistentString>
+            <PersistentString
+               value = "Self.dateFormatter">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in closure #1 in CreditView.body.getter:CreditView.swift">
          <PersistentStrings>
             <PersistentString
@@ -19,22 +39,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in closure #1 in closure #1 in PersonDescriptionView.body.getter:PersonDescriptionView.swift">
+         contextName = "closure #1 in CreditsView.body.getter:CreditsView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "Self.dateFormatter">
+               value = "credits">
             </PersistentString>
             <PersistentString
-               value = "Self.dateFormatter.string(from: birthday)">
+               value = "credits.crew">
             </PersistentString>
             <PersistentString
-               value = "birthday.year">
-            </PersistentString>
-            <PersistentString
-               value = "dateFormatter.string(from: birthday)">
-            </PersistentString>
-            <PersistentString
-               value = "person.birthday">
+               value = "credits.cast">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

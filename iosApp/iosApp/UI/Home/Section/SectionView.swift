@@ -27,6 +27,7 @@ struct SectionView: View {
                                 .onAppear {
                                     viewModel.loadMoreMoviesIfNeeded(currentMovie: movie)
                                 }
+                                .id(movie.id)
                         }
                     }
                 }
