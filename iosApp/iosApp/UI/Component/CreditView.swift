@@ -18,21 +18,23 @@ struct CreditView: View {
     // MARK: View
 
     var body: some View {
-        VStack(alignment: .center) {
-            NavigationLink(destination: self.destination) {
+        NavigationLink(destination: self.destination) {
+            VStack(alignment: .center) {
+
                 if let profilePath = credit.profilePath, !profilePath.isEmpty {
                     MoviePosterImage(url: URL(string: PictureSizes.Profile.w185.buildURL(path: profilePath)))
                 } else {
                     MoviePosterImage(url: URL(string: PictureSizes.Poster.w342.buildURL(path: credit.posterPath ?? "")))
                 }
-            }
 
-            Text(credit.title)
-                .font(.subheadline)
-            Text(credit.subtitle)
-                .font(.caption)
-            Spacer()
+                Text(credit.title)
+                    .font(.subheadline)
+                Text(credit.subtitle)
+                    .font(.caption)
+                Spacer()
+            }
         }
+        .accentColor(.black)
     }
 
     @ViewBuilder
